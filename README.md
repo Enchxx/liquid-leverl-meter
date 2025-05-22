@@ -40,14 +40,23 @@ and triggers an alarm LED when programmable thresholds are exceeded.
 
 **Repository Structure**
 ```
-├── /src/
-│   ├── level_meter.v
-│   ├── display_driver.v
-│   ├── sensor_interface.v
-│   └── threshold_ctrl.v
-├── /constraints/
-├── /sim/
-└── /docs/
+├── /sources_1/
+│   └── /new/
+│       ├── top.v
+│       ├── sensors_input_module.v
+│       ├── threshold_comparator.v
+│       ├── threshold_programmer.v
+│       ├── debouncer.v
+│       ├── clock_manager.v
+│       ├── bcd_to_7seg.v
+│       ├── alarm_to_7seg.v
+│       └── display_controller.v
+├── /constrs_1/
+│   └── /new/
+│       └── liquid-level-meter.xdc
+├── /sim_1/
+    └── /new/
+        └── top_tb.v
 ```
 
 **How It Works**
