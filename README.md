@@ -54,7 +54,7 @@ and triggers an alarm LED when programmable thresholds are exceeded.
 ├── /constrs_1/
 │   └── /new/
 │       └── liquid-level-meter.xdc
-├── /sim_1/
+└── /sim_1/
     └── /new/
         └── top_tb.v
 ```
