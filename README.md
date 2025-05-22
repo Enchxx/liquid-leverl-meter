@@ -28,7 +28,7 @@ and triggers an alarm LED when programmable thresholds are exceeded.
 
   - Sensor: Simulated by switches
 
-  - Display: onm board 4x 7-segment digits (CC)
+  - Display: On board 4x 7-segment digits (CC)
 
 **Controls:**
 
