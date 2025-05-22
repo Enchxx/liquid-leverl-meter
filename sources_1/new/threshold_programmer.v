@@ -13,10 +13,8 @@ module threshold_programmer(
     reg input_error;
     reg [7:0] stored_data;
     
-    always @(posedge clk_100MHz or posedge reset) begin
+    always @(*) begin
         if (reset) begin
-            high_threshold <= 8'd100;
-            low_threshold <= 8'd0;
             input_error <= 1'b0;
             stored_data <= 8'd0;
         end else begin
@@ -36,12 +34,20 @@ module threshold_programmer(
                     input_error <= 1'b1;
                 end
              endcase
-        
-            if (saveH_button & (setup_input > low_threshold) & ~input_error)
+         end
+     end
+             
+     always @(posedge clk_100MHz or posedge reset) begin
+        if (reset) begin
+            high_threshold <= 8'd100;
+            low_threshold <= 8'd0; 
+        end else begin
+            if (saveH_button & (setup_input > low_threshold) & ~input_error) begin
                 high_threshold <= stored_data;
-            else if (saveL_button & (setup_input < high_threshold) & ~input_error)
+            end else if (saveL_button & (setup_input < high_threshold) & ~input_error) begin
                 low_threshold <= stored_data; 
-        end
-    end
-    
+            end
+        end 
+     end
+
 endmodule

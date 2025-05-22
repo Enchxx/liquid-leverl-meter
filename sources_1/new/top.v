@@ -8,8 +8,9 @@ module top(
     input [7:0] sensors_input,
     input [7:0] setup_input,
     output [7:0] cathodes, // abcdefg_dp
-    output [3:0] anodes, // AN7 AN6 AN5 AN4
-    output [2:0] LED //RGB
+    output [7:0] anodes, // AN7 AN6 AN5 AN4 AN3 AN2 AN1 AN0
+    output [2:0] LED1, //RGB
+    output [2:0] LED2 //RGB
     );
     
     wire clk_1kHz;
@@ -50,7 +51,7 @@ module top(
     .clk_100MHz (clk_100MHz),
     .reset (reset),
     .sensors_input (sensors_input),
-    .stored_data (sensor_data),
+    .data (sensor_data),
     .input_error (input_error)
     );
     
@@ -90,7 +91,8 @@ module top(
     .data_u (data_u),
     .anodes (anodes),
     .cathodes (cathodes),
-    .LED (LED)
+    .LED1 (LED1),
+    .LED2 (LED2)
     );
     
 endmodule

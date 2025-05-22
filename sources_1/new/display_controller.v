@@ -11,9 +11,10 @@ module display_controller(
     input  [3:0] data_h,
     input  [3:0] data_t,
     input  [3:0] data_u,
-    output reg [3:0] anodes,
+    output reg [7:0] anodes,
     output reg [7:0] cathodes,
-    output reg [2:0] LED
+    output reg [2:0] LED1,
+    output reg [2:0] LED2
     );
     
     reg [1:0] Q;
@@ -26,7 +27,6 @@ module display_controller(
     wire blank_htt;
     
     bcd_to_7seg bcd_to_7seg_h (
-    .clk_100MHz (clk_100MHz),
     .reset (reset),
     .input_data (data_h),
     .blank (1'b1),
@@ -35,7 +35,6 @@ module display_controller(
     );
             
     bcd_to_7seg bcd_to_7seg_t (
-    .clk_100MHz (clk_100MHz),
     .reset (reset),
     .input_data (data_t),
     .blank (blank_htt),
@@ -43,7 +42,6 @@ module display_controller(
     );
     
     bcd_to_7seg bcd_to_7seg_u (
-    .clk_100MHz (clk_100MHz),
     .reset (reset),
     .input_data (data_u),
     .blank (1'b0),
@@ -51,32 +49,24 @@ module display_controller(
     );
     
     alarm_to_7seg alarm_to_7seg (
-    .clk_100MHz (clk_100MHz),
     .reset (reset),
-    .input_data (data_u),
+    .input_data ({input_error,GOET,LOET}),
     .output_data (data_a_mux)
     );
     
-    always @(posedge clk_100MHz or posedge reset) begin
-        if (reset) begin
-            Q <= 2'd0;
-            anodes <= 4'd15;
+    always @(*) begin
+    if (reset) begin
+            anodes <= 8'd255;
             cathodes <= 8'd255;
-            LED <= 2'd0;
+            LED1 <= 2'd0;
+            LED2 <= 2'd0;
         end else begin
-            if (clk_1kHz) begin
-                if (Q != 2'd3)
-                    Q <= Q + 1;
-                else
-                    Q <= 2'd0;
-            end
-            
             case(Q)
-                2'b00: anodes <= 4'b0111;
-                2'b01: anodes <= 4'b1011;
-                2'b10: anodes <= 4'b1101;
-                2'b11: anodes <= 4'b1110;
-                default: anodes <= 4'b1111;
+                2'b00: anodes <= 8'b0111_1111;
+                2'b01: anodes <= 8'b1011_1111;
+                2'b10: anodes <= 8'b1101_1111;
+                2'b11: anodes <= 8'b1110_1111;
+                default: anodes <= 8'b1111_1111;
             endcase
 
             case(Q)
@@ -88,13 +78,29 @@ module display_controller(
             endcase 
             
             case({input_error,GOET,LOET})
-                3'b000: LED <= {1'b0,1'b0,1'b1};
-                3'b001: LED <= {clk_1Hz,1'b0,clk_1Hz};
-                3'b010: LED <= {clk_1Hz,1'b0,1'b0};
-                3'b1xx: LED <= {1'b1,1'b0,1'b0};
-                default: LED <= {1'b0,1'b0,1'b0};
+                3'b000: LED1 <= {1'b0,1'b1,1'b0};
+                3'b001: LED1 <= {clk_1Hz,clk_1Hz,1'b0};
+                3'b010: LED1 <= {clk_1Hz,1'b0,1'b0};
+                3'b1xx: LED1 <= {1'b1,1'b0,1'b0};
+                default: LED1 <= {1'b0,1'b0,1'b0};
             endcase
-        end
+            
+            LED2 <= LED1;
+            
+            end 
     end
     
+    always @(posedge clk_100MHz or posedge reset) begin
+        if (reset) begin
+            Q <= 2'd0;
+        end else begin
+            if (clk_1kHz) begin
+                if (Q != 2'd3)
+                    Q <= Q + 1;
+                else
+                    Q <= 2'd0;
+                end
+            end
+    end
+
 endmodule

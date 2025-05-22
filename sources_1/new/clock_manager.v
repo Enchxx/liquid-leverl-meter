@@ -13,17 +13,24 @@ module clock_manager(
     always @(posedge clk_100MHz or posedge reset) begin
         if(reset) begin
             Q1 = 17'd0;
-            Q2 = 27'd0;
         end else begin
         if(Q1 != 17'd99999)
             Q1 <= Q1 + 1;
         else
             Q1 <= 17'd0;
-        if (Q2 != 27'd99999999)
-            Q2 <= Q2 + 1;
-        else
-            Q2 <= 27'd0;
         end
+    end
+    
+    always @(posedge clk_100MHz or posedge reset) begin
+        if(reset) begin
+            Q2 = 27'd0;
+        end else begin
+            if (Q2 != 27'd99999999)
+                Q2 <= Q2 + 1;
+            else
+                Q2 <= 27'd0;
+        end
+    
     end
     
     assign clk_1kHz = (Q1 == 17'd99999) ? 1'b1 : 1'b0;

@@ -4,11 +4,13 @@ module sensors_input_module(
     input clk_100MHz,
     input reset,
     input [7:0] sensors_input,
-    output reg [7:0] stored_data,
+    output reg [7:0] data,
     output reg input_error
     );
     
-    always @(posedge clk_100MHz or posedge reset) begin
+    reg [7:0] stored_data = 8'd0;
+    
+    always @(*) begin
         if (reset) begin
         stored_data <= 8'd0;
         input_error <= 1'b0;
@@ -29,6 +31,14 @@ module sensors_input_module(
                     input_error <= 1'b1;
                 end
             endcase
+        end
+    end
+    
+    always @(posedge clk_100MHz or posedge reset) begin
+        if (reset) begin
+            data <= 8'd0;
+        end else begin
+            data <= stored_data;
         end
     end
     

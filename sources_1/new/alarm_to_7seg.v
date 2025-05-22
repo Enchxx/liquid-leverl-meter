@@ -1,13 +1,12 @@
 `timescale 1ns / 1ps
 
 module alarm_to_7seg(
-    input clk_100MHz,
     input reset,
     input [2:0] input_data,
     output reg [7:0] output_data
     );
     
-    always @(posedge clk_100MHz or posedge reset) begin
+    always @(*) begin
         if(reset) begin
             output_data <= 8'b1111_1111;
         end else begin

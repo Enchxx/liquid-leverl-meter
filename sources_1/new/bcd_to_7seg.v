@@ -1,7 +1,6 @@
 `timescale 1ns / 1ps
 
 module bcd_to_7seg(
-    input clk_100MHz,
     input reset,
     input [3:0] input_data,
     input blank,
@@ -9,7 +8,7 @@ module bcd_to_7seg(
     output reg blank_out
     );
     
-    always @(posedge clk_100MHz or posedge reset) begin
+    always @(*) begin
         if (reset) begin
             blank_out = 1'b0;
             output_data <= 8'b1111_1111;
