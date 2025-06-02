@@ -14,9 +14,11 @@ module alarm_to_7seg(
                 3'b001: output_data = 8'b1110_0011; //L
                 3'b000: output_data = 8'b1100_0101; //O
                 3'b010: output_data = 8'b1001_0001; //H
-                3'b1xx: output_data = 8'b0110_0001; // E
+                3'b100: output_data = 8'b0110_0001; // E
+                3'b110: output_data = 8'b0110_0001; // E
+                3'b101: output_data = 8'b0110_0001; // E
                 default: output_data = 8'b1111_1111; // off
             endcase
         end
-end
+    end
 endmodule

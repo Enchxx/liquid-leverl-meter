@@ -15,6 +15,7 @@ module top(
     
     wire clk_1kHz;
     wire clk_1Hz;
+    wire led_pwm;
     wire reset;
     wire input_error;
     wire GOET;
@@ -44,7 +45,8 @@ module top(
     .clk_100MHz (clk_100MHz),
     .reset (reset),
     .clk_1kHz (clk_1kHz),
-    .clk_1Hz (clk_1Hz)
+    .clk_1Hz (clk_1Hz),
+    .led_pwm (led_pwm)
     );
     
     sensors_input_module sensors_input_module (
@@ -82,6 +84,7 @@ module top(
     .clk_100MHz (clk_100MHz),
     .clk_1kHz (clk_1kHz),
     .clk_1Hz (clk_1Hz),
+    .led_pwm (led_pwm),
     .reset (reset),
     .input_error (input_error),
     .GOET (GOET),
@@ -93,6 +96,5 @@ module top(
     .cathodes (cathodes),
     .LED1 (LED1),
     .LED2 (LED2)
-    );
-    
+    ); 
 endmodule

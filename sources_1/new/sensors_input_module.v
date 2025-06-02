@@ -41,5 +41,4 @@ module sensors_input_module(
             data <= stored_data;
         end
     end
-    
 endmodule

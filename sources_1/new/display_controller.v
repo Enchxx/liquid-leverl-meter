@@ -4,6 +4,7 @@ module display_controller(
     input  clk_100MHz,
     input  clk_1kHz,
     input  clk_1Hz,
+    input  led_pwm,
     input  reset,
     input  input_error,
     input  GOET,
@@ -58,8 +59,8 @@ module display_controller(
     if (reset) begin
             anodes <= 8'd255;
             cathodes <= 8'd255;
-            LED1 <= 2'd0;
-            LED2 <= 2'd0;
+            LED1 <= 3'd0;
+            LED2 <= 3'd0;
         end else begin
             case(Q)
                 2'b00: anodes <= 8'b0111_1111;
@@ -78,15 +79,15 @@ module display_controller(
             endcase 
             
             case({input_error,GOET,LOET})
-                3'b000: LED1 <= {1'b0,1'b1,1'b0};
-                3'b001: LED1 <= {clk_1Hz,clk_1Hz,1'b0};
-                3'b010: LED1 <= {clk_1Hz,1'b0,1'b0};
-                3'b1xx: LED1 <= {1'b1,1'b0,1'b0};
-                default: LED1 <= {1'b0,1'b0,1'b0};
+                3'b000: LED1 <= {1'b0,1'b1,1'b0}; // Green
+                3'b001: LED1 <= {led_pwm,led_pwm,1'b0}; // Yellow 1Hz nw
+                3'b010: LED1 <= {led_pwm,1'b0,1'b0}; // RED 1Hz nw
+                3'b100: LED1 <= {1'b1,1'b0,1'b0}; // RED
+                3'b101: LED1 <= {1'b1,1'b0,1'b0}; // RED
+                3'b110: LED1 <= {1'b1,1'b0,1'b0}; //RED
+                default: LED1 <= {1'b0,1'b0,1'b0}; //OFF
             endcase
-            
-            LED2 <= LED1;
-            
+                LED2 <= LED1;
             end 
     end
     
@@ -102,5 +103,4 @@ module display_controller(
                 end
             end
     end
-
 endmodule

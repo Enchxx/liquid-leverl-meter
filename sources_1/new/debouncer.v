@@ -15,7 +15,6 @@ module debouncer(
     reg prev_reset;
     reg prev_saveH;
     reg prev_saveL;
-    reg btn_reset;
 
     always @(posedge clk_100MHz or posedge reset) begin
         if (reset) begin
@@ -34,7 +33,4 @@ module debouncer(
             prev_saveL <= saveL_button;
          end
     end
-    
-    
-    
 endmodule

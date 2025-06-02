@@ -25,8 +25,8 @@ module bcd_to_7seg(
                     end
                 end
                 4'b0001: output_data = 8'b1001_1111; //1
-                4'b0010: output_data = 8'b0010_0011; //2
-                4'b0011: output_data = 8'b0000_1011; //3
+                4'b0010: output_data = 8'b0010_0101; //2
+                4'b0011: output_data = 8'b0000_1101; //3
                 4'b0100: output_data = 8'b1001_1001; //4
                 4'b0101: output_data = 8'b0100_1001; //5
                 4'b0110: output_data = 8'b0100_1001; //6

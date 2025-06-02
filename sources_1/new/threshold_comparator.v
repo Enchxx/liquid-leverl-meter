@@ -35,6 +35,5 @@ module threshold_comparator(
             data_t <= (sensor_data % 100) / 10;
             data_u <= sensor_data % 10;
         end
-    end
-    
+    end 
 endmodule

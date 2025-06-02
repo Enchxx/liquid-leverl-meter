@@ -4,7 +4,8 @@ module clock_manager(
     input clk_100MHz,
     input reset,
     output clk_1kHz,
-    output clk_1Hz
+    output clk_1Hz,
+    output led_pwm
     );
     
     reg [16:0] Q1;
@@ -35,5 +36,5 @@ module clock_manager(
     
     assign clk_1kHz = (Q1 == 17'd99999) ? 1'b1 : 1'b0;
     assign clk_1Hz = (Q2 == 27'd99999999) ? 1'b1 : 1'b0;
-    
+    assign led_pwm = (Q2 < 27'd49999999) ? 1'b1 : 1'b0;
 endmodule
